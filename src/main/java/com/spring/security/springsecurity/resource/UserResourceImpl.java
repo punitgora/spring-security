@@ -1,6 +1,8 @@
 package com.spring.security.springsecurity.resource;
 
 import com.spring.security.springsecurity.entity.UserEntity;
+import com.spring.security.springsecurity.error.Error;
+import com.spring.security.springsecurity.exception.UserBusinessException;
 import com.spring.security.springsecurity.model.UserModel;
 import com.spring.security.springsecurity.repository.UserDao;
 import org.springframework.core.convert.ConversionService;
@@ -26,8 +28,10 @@ public class UserResourceImpl implements UserResource{
     @Override
     public Response getUserByEmail(String email) {
         UserEntity userEntity = userDao.getUserByEmail(email);
+        if (userEntity == null) {
+            throw new UserBusinessException(new Error("Resource Not Found", "Requested resource not exist"), "NOT_AUTHORIZED");
+        }
         return Response.ok().entity(conversionService.convert(userEntity, UserModel.class)).build();
-
     }
 
     @Override
