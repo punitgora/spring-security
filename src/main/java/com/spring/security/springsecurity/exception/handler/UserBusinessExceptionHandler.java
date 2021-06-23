@@ -23,7 +23,6 @@ public class UserBusinessExceptionHandler implements ExceptionMapper<UserBusines
 
     @Override
     public Response toResponse(UserBusinessException e) {
-       // ErrorCode str = e.getErrorCode();
         ResponseStatus responseStatus = errorMap.get(e.getErrorCode().getReasonPhrase());
 
         return Response.status(Response.Status.fromStatusCode(responseStatus.statusCode))

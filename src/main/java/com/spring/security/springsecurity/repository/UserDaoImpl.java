@@ -23,9 +23,11 @@ public class UserDaoImpl implements UserDao {
          * select u from UserEntity u where u.email LIKE ?1
          * select u from UserEntity u where u.email = ?1
          * select u from UserEntity u where u.email LIKE :custEmail
+         * from UserEntity u where u.email = ?1
+         * from UserEntity where email = ?1
          *
          */
-        List userList = entityManager.createQuery("select u from UserEntity u where u.email = ?1")
+        List userList = entityManager.createQuery("from UserEntity where email = ?1")
                 .setParameter(1, email)
                 .setMaxResults(1)
                 .getResultList();
